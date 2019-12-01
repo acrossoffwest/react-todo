@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import {Link} from "react-router-dom";
 // import PropTypes from 'prop-types';
 // import styles from './Task.scss';
 
@@ -7,19 +9,16 @@ import React from 'react';
 // this section. 
 class Task extends React.Component {
   render() {
-    let task = {
-        title: "Task title",
-        content: "Some content of task",
-        status: "process"
-    };
+    let {task} = this.props;
     let {id} = this.props.match.params
 	return <div>
         <h1 className="text-4xl">{task.title}</h1>
         <p className="mt-3">{task.content}</p>
-        <p className="mt-5"><span className="text-blue-600">Status:</span> {task.content}</p>
-        <button className="rounded bg-green-500 mt-5 p-1 px-5 text-white hover:bg-green-400" type="button">Done</button>
-        <button className="ml-5 rounded bg-blue-500 mt-5 p-1 px-5 text-white hover:bg-blue-400" type="button">Edit</button>
-        <button className="ml-5 rounded bg-red-500 mt-5 p-1 px-5 text-white hover:bg-red-400" type="button">Remove</button>
+        <p className="mt-5 mb-5"><span className="text-blue-600">Status:</span> {task.status}</p>
+        <Link className="rounded-l bg-green-500 mt-5 p-1 px-5 text-white hover:bg-green-400" to={`/tasks/${id}/edit`}>Done</Link>
+        <Link className="bg-blue-500 mt-5 p-1 px-5 text-white hover:bg-blue-400" to={`/tasks/${id}/edit`}>Edit</Link>
+        <Link className="bg-red-500 mt-5 p-1 px-5 text-white hover:bg-red-400" to={`/tasks/${id}/edit`}>Remove</Link>
+        <Link to={`/tasks`} className="rounded-r bg-gray-500 mt-5 p-1 px-5 border-transparent text-white hover:bg-gray-400">Cancel</Link>
     </div>;
   }
 }
@@ -30,4 +29,8 @@ const TaskPropTypes = {
 
 Task.propTypes = TaskPropTypes;
 
-export default Task;
+let mapStateToProps = (state, ownProps) => ({
+    task: state.tasks[ownProps.match.params.id]
+});
+
+export default connect(mapStateToProps)(Task);

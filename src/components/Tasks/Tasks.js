@@ -1,5 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 // import styles from './Tasks.scss';
 
@@ -8,8 +9,8 @@ class Tasks extends React.Component {
 		return (
 			<div className='Tasks'>
 				<h1 className="text-4xl">Tasks list</h1>
-				<div>
-					<Link to="/task/create">Add</Link>
+				<div className="mb-5">
+					<Link className="bg-green-400 rounded p-2" to="/task/create">Add</Link>
 				</div>
 				{this.tasks()}
 			</div>
@@ -17,21 +18,15 @@ class Tasks extends React.Component {
 	}
 
 	tasks () {
-		let tasks = [
-			{header: 'Cut'},
-			{header: 'Wake up'},
-			{header: 'Sleep'},
-			{header: 'Cheburek'},
-			{header: 'Training'},
-			{header: 'Walking'},
-		]
+		let tasks = this.props.tasks;
 		let i = 0
 		return tasks.map(r => (
 			<div key={i}>
-				<div className="underline text-blue-500 hover:text-blue-800">
-					<Link to={`/tasks/${++i}`}>{r.header}</Link>
-					<br/>
-					<Link className="text-green-500">Open</Link> <Link className="text-yellow-500">Edit</Link> <Link className="text-red-500">Delete</Link></div>
+				<div className="underline text-blue-500 hover:text-blue-800 mb-5">
+					<Link to={`/tasks/${i++}`}>{!r.title ? 'Default task title' : r.title}</Link>
+					<Link className="ml-10 bg-blue-500 rounded-l px-2 mt-5 p-1 text-white hover:bg-blue-400" to={`/tasks/${i}/edit`}>Edit</Link>
+					<Link className="bg-red-500 mt-5 rounded-r px-2 p-1 text-white hover:bg-red-400" to={`/tasks/${i}/edit`}>Remove</Link>
+				</div>
 			</div>
 		))
 	}
@@ -43,4 +38,6 @@ const TasksPropTypes = {
 
 Tasks.propTypes = TasksPropTypes;
 
-export default Tasks;
+let mapStateToProps = state => ({tasks: state.tasks});
+
+export default connect(mapStateToProps)(Tasks);

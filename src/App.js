@@ -31,6 +31,7 @@ function App() {
                     <Route path="/tasks" exact component={Tasks}/>
                     <Route path="/task/create" component={TaskForm}/>
                     <Switch>
+                        <Route path="/tasks/:id/edit" component={TaskForm} />
                         <Route path="/tasks/:id" component={Task} />
                     </Switch>
                 </div>
