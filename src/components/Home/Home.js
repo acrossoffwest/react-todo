@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 const Home = props => (
 	<div>
-		<h1 className="text-3xl">Welcome to <span className="text-4xl">ToDo</span> application.</h1>
+		<h1 className="text-4xl">Welcome to <span className="text-4xl">ToDo</span> application.</h1>
 		<p className="mt-3">Here you can plan your <Link to="/tasks" className="underline">tasks</Link>.</p>
 	</div>
 );

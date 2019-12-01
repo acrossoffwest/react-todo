@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom"
 import Home from "./components/Home";
 import Tasks from "./components/Tasks";
 import Task from "./components/Task";
+import TaskForm from "./components/Task/TaskForm";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
                 <div className="content">
                     <Route path="/" exact component={Home}/>
                     <Route path="/tasks" exact component={Tasks}/>
+                    <Route path="/task/create" component={TaskForm}/>
                     <Switch>
                         <Route path="/tasks/:id" component={Task} />
                     </Switch>

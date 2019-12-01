@@ -7,6 +7,10 @@ class Tasks extends React.Component {
 	render () {
 		return (
 			<div className='Tasks'>
+				<h1 className="text-4xl">Tasks list</h1>
+				<div>
+					<Link to="/task/create">Add</Link>
+				</div>
 				{this.tasks()}
 			</div>
 		);
@@ -24,7 +28,10 @@ class Tasks extends React.Component {
 		let i = 0
 		return tasks.map(r => (
 			<div key={i}>
-				<div className="underline text-blue-500 hover:text-blue-800"><Link to={`/tasks/${++i}`}>{r.header}</Link></div>
+				<div className="underline text-blue-500 hover:text-blue-800">
+					<Link to={`/tasks/${++i}`}>{r.header}</Link>
+					<br/>
+					<Link className="text-green-500">Open</Link> <Link className="text-yellow-500">Edit</Link> <Link className="text-red-500">Delete</Link></div>
 			</div>
 		))
 	}
