@@ -5,17 +5,28 @@ import * as serviceWorker from './serviceWorker';
 import './styles/tailwind.css';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
+import { ADD_TASK, UPDATE_TASK } from "./store/actionTypes";
 
 let reducer = (state = {}, data = {}) => {
-    let newState = Object.assign(state, data);
-    return newState;
+    console.log(data.payload)
+    switch(data.type) {
+        case ADD_TASK:
+            state.tasks.push(data.payload);
+            break;
+        case UPDATE_TASK:
+            state.tasks[data.index] = data.payload;
+            break;
+    }
+    return state;
 }
 
 let store = createStore(reducer, {
     tasks: [
-        {title: 'Do haircut', content: 'Top content', status: 'ready'},
-        {title: 'Cut', content: 'Top content', status: 'process'},
-        {title: 'Wake up', content: 'Top content', status: 'new'}
+        {
+            title: 'Do haircut',
+            content: 'Top content',
+            status: 'ready',
+        }
     ]
 });
 

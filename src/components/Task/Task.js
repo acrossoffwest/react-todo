@@ -18,7 +18,7 @@ class Task extends React.Component {
         <Link className="rounded-l bg-green-500 mt-5 p-1 px-5 text-white hover:bg-green-400" to={`/tasks/${id}/edit`}>Done</Link>
         <Link className="bg-blue-500 mt-5 p-1 px-5 text-white hover:bg-blue-400" to={`/tasks/${id}/edit`}>Edit</Link>
         <Link className="bg-red-500 mt-5 p-1 px-5 text-white hover:bg-red-400" to={`/tasks/${id}/edit`}>Remove</Link>
-        <Link to={`/tasks`} className="rounded-r bg-gray-500 mt-5 p-1 px-5 border-transparent text-white hover:bg-gray-400">Cancel</Link>
+        <Link onClick={this.props.history.goBack} className="rounded-r bg-gray-500 mt-5 p-1 px-5 border-transparent text-white hover:bg-gray-400">Back</Link>
     </div>;
   }
 }

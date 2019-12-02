@@ -23,9 +23,9 @@ class Tasks extends React.Component {
 		return tasks.map(r => (
 			<div key={i}>
 				<div className="underline text-blue-500 hover:text-blue-800 mb-5">
-					<Link to={`/tasks/${i++}`}>{!r.title ? 'Default task title' : r.title}</Link>
+					<Link to={`/tasks/${i}`}>{!r.title ? 'Default task title' : r.title}</Link>
 					<Link className="ml-10 bg-blue-500 rounded-l px-2 mt-5 p-1 text-white hover:bg-blue-400" to={`/tasks/${i}/edit`}>Edit</Link>
-					<Link className="bg-red-500 mt-5 rounded-r px-2 p-1 text-white hover:bg-red-400" to={`/tasks/${i}/edit`}>Remove</Link>
+					<Link className="bg-red-500 mt-5 rounded-r px-2 p-1 text-white hover:bg-red-400" to={`/tasks/${i++}/edit`}>Remove</Link>
 				</div>
 			</div>
 		))
