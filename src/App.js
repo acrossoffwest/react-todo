@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom"
 import styles from './App.scss';
+import fa from '@fortawesome/fontawesome-free';
 
 import Home from "./components/Home";
 import Tasks from "./components/Tasks";

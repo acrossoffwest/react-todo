@@ -16,6 +16,7 @@ let reducer = (state = {}, data = {}) => {
         case UPDATE_TASK:
             state.tasks[data.index] = data.payload;
             break;
+        default:
     }
     return state;
 }

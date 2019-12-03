@@ -1,52 +1,41 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 
-class TaskForm extends React.Component {
-    componentWillMount(){
-        this.setState({
-            updatable : false,
-            task: this.getTask()
-        });
+const addTask = (task, add, history) => {
+    return () => {
+        task.status = 'new';
+        add(task);
+        history.push('/tasks');
     }
-    getTask () {
-        let {task} = this.props;
-        return task ? task : {};
-    }
-    add (task) {
-        return () => {
-            task.status = 'new';
-            this.props.add(task);
-            this.props.history.push('/tasks');
-        }
-    }
-    update (index, task) {
-        return () => {
-            this.props.update(index, task);
-            this.setState({
-                task: task
-            })
-        }
-    }
-    saveButton (index, task) {
-        if (!index) {
-            return <a href="#" onClick={ this.add(this.state.task) } className="rounded-l bg-green-500 mt-5 p-1 px-5 text-white hover:bg-green-400">Create</a>
-        }
-    }
-  render() {
-    let task = {};
-    let index = this.props.match.params.id
-    let handleChange = ({target: {value, id}}) => {
-        task[id] = value;
-        let state = {
-            task: this.state.task
-        };
-        state.task[`${id}`] = value;
-        this.setState(state);
-        this.update(index, state.task);
-    };
+};
 
-	return (<form action="">
+const updateTask = (index, task, update, setTask) => {
+    return () => {
+        update(index, task);
+        setTask(task)
+    }
+};
+
+const handleChange = (index, task, setTask, {target: {value: inputValue, id: elementID}}) => {
+    task[elementID] = inputValue;
+    setTask(task);
+    updateTask(index, task);
+};
+
+const SaveButton = ({index, task, add, history}) => {
+    if (!index) {
+        return <a href="#" onClick={ addTask(task, add, history) } className="rounded-l bg-green-500 mt-5 p-1 px-5 text-white hover:bg-green-400">Create</a>
+    }
+    return ''
+};
+
+const TaskForm = ({task: initTask = {}, add, update, history, match: {params: { id: index }}}) => {
+    const [task, setTask] = useState(initTask);
+
+    const handleChangeWrapper = e => handleChange(index, task, setTask, e);
+
+    return (<form action="">
         <div className="w-full px-3 mb-6 md:mb-0">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                    htmlFor="title">
@@ -54,7 +43,7 @@ class TaskForm extends React.Component {
             </label>
             <input
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                id="title" type="text" value={this.state.task.title} placeholder="TODO: Fill title" onChange={handleChange}/>
+                id="title" type="text" value={task.title} placeholder="TODO: Fill title" onChange={handleChangeWrapper}/>
         </div>
         <div className="w-full px-3 mb-6  mb-5">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -63,14 +52,13 @@ class TaskForm extends React.Component {
             </label>
             <textarea
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                id="content" value={this.state.task.content} type="text" placeholder="TODO: Fill some content" onChange={handleChange} />
+                id="content" value={task.content} type="text" placeholder="TODO: Fill some content" onChange={handleChangeWrapper} />
         </div>
         <div className="w-full px-3 mb-6 md:mb-0">
-            {this.saveButton(index, task)}
-            <a href="#" onClick={this.props.history.goBack} className="rounded-r bg-gray-500 mt-5 p-1 px-5 text-white hover:bg-gray-400">Back</a>
+            <SaveButton index={index} task={task} add={add} history={history}></SaveButton>
+            <a href="#" onClick={history.goBack} className="rounded-r bg-gray-500 mt-5 p-1 px-5 text-white hover:bg-gray-400">Back</a>
         </div>
     </form>);
-  }
 }
 
 const TaskPropTypes = {
