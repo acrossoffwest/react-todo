@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom"
+import styles from './App.scss';
 
 import Home from "./components/Home";
 import Tasks from "./components/Tasks";
@@ -9,7 +10,7 @@ import TaskForm from "./components/Task/TaskForm";
 function App() {
   return (
     <Router>
-        <div className="container mx-auto">
+        <div className="container mx-auto bg-white rounded-b p-10">
             <div className="flex flex-wrap">
                 <div className="w-full">
                     <ul className="flex mt-5">
